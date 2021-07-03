@@ -1,0 +1,108 @@
+﻿@model SearchViewModel 
+
+@{
+    ViewData["Title"] = " Shopping List";
+}
+
+<h1>Shopping Lists To Be Done</h1>
+
+<p>
+    <a asp-action="Create">Add New Shopping List</a>
+</p>
+
+<p>
+    @if (Model.ShowAll)
+    {
+        <a asp-action="Index" asp-route-showall="false">Show Incompletes</a>
+
+    }
+    else
+    {
+        <a asp-action="Index" asp-route-showall="true">Show All</a>
+
+    }
+</p>
+
+<form asp-action="Index" asp-controller="Todo" method="get">
+    <div class="form-group">
+        <label asp-for="SearchText" class="control-label"></label>
+        <input asp-for="SearchText" class="form-control" />
+    </div>
+    @*<div class="form-group">
+        <label asp-for="ShowAll" class="control-label"></label>
+        <input asp-for="ShowAll" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>*@
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Category
+            </th>
+
+            @*<th>
+                DueDate
+            </th>
+            <th>
+                Remaining Hour
+            </th>*@
+            <th>
+                Is Completed
+            </th>
+            <th>
+               Created Date
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Result) {
+        <tr>
+            <td>
+                @if (item.IsCompleted)
+                {
+        <del>   @Html.DisplayFor(modelItem => item.Title)</del> }
+                        else
+                        {
+        @Html.DisplayFor(modelItem => item.Title)                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RemainingHour)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompletedDate)
+            </td>
+
+
+            <td>
+                @if (item.IsCompleted)
+                {
+        <a asp-action="MakeInComplete" asp-route-id="@item.Id" asp-route-showAll="@Model.ShowAll">Incomplete</a> }
+                        else
+                        {
+        <a asp-action="MakeComplete" asp-route-id="@item.Id" asp-route-showAll="@Model.ShowAll"> Complete</a>}
+
+                |   <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
