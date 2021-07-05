@@ -6,8 +6,13 @@
 
 
 <div class="text-center">
-    <h1 class="display-">Welcome</h1>
+    <body style="background-color: lemonchiffon;">
+    <h1 class="display-">WELCOME</h1>
+    </body>
 </div>
+
+    
+
 @if (User.Identity.IsAuthenticated)
 {
 
@@ -19,8 +24,8 @@
     <h1 class="display-4"> There is no shopping list to be done. </h1>
 
 </div> }
-                else
-                {
+else
+{
 
 <table class="table">
     <thead>
@@ -57,6 +62,7 @@
 
 
 
-</tr>}
+</tr>
+}
     </tbody>
 </table>}}
